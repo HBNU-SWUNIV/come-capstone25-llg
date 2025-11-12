@@ -1,4 +1,7 @@
 # 한밭대학교 컴퓨터공학과 LLG팀
+PDF 파싱 기반 RAG 파이프라인 개발
+
+-----
 
 **팀 구성**
 - 20222039 이현정 (팀장, MLOps)
@@ -16,7 +19,7 @@
 ## System Design
    - ### System Requirements
       - Frontend: Next.js
-      - Backend: FastApi, FAISS
+      - Backend: FastAPI
       - Database: ChromaDB
       - Deployment: Docker, Kubernetes
         
@@ -32,7 +35,7 @@
 
 
    - ### System Example
-     - 기존 AI를 활용해서 질문을 하였을 때는 응답을 잘 생성하지 못하였지만, 본 프레임워크를 사용하였을 때는 문서 기반으로 정확하게 답변한 것을 확인할 수 있음
+     - 기존 AI를 활용해서 질문을 하였을 때는 응답을 잘 생성하지 못하였지만, 개발한 RAG을 사용하였을 때는 문서 기반으로 정확하게 답변한 것을 확인할 수 있음
 <img width="393" height="169" alt="Image" src="https://github.com/user-attachments/assets/0ae11774-d1d6-4e66-ad49-0e6e540ac14d" />
 <img width="483" height="168" alt="Image" src="https://github.com/user-attachments/assets/ed89adb6-f2cb-4f77-8aec-f79519d47247" />
 <img width="482" height="155" alt="Image" src="https://github.com/user-attachments/assets/796fb72d-f145-4ca6-80f9-4fffcbd9016c" />
