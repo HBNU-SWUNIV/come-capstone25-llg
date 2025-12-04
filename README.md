@@ -120,11 +120,10 @@
   
       | Study | Paper Links | Summary |
     |------|------|------|
-    | **Dense Passage Retrieval for Open-Domain Question Answering (DPR)** — Karpukhin et al., 2020 | https://arxiv.org/pdf/2004.04906.pdf | BM25 기반 sparse 검색이 의미적 유사도를 반영하지 못한다는 한계를 지적하며 BERT 기반 Dense Passage Retrieval(DPR)을 제안. 질문과 문단을 각각 독립적으로 임베딩하고 내적 유사도(Inner Product) 로 검색하는 방식이 기존 BM25 대비 ODQA 성능을 크게 향상시킴을 실험적으로 증명 |
+    | **Dense Passage Retrieval for Open-Domain Question Answering (DPR)** — Karpukhin et al., 2020 | https://arxiv.org/pdf/2004.04906.pdf | 질문과 문단을 각각 독립적으로 임베딩하고 내적 유사도(Inner Product) 로 검색하는 방식이 기존 BM25 대비 ODQA 성능을 크게 향상시킴을 실험적으로 증명 |
     | **ColBERTv2: Effective and Efficient Retrieval via Late Interaction** — Santhanam et al., 2022 | https://arxiv.org/pdf/2112.01488.pdf | DPR의 단점인 "**문서 전체를 하나의 벡터로 축소 → 정보 손실**" 문제를 해결하기 위해 **Late Interaction 기반 ColBERT 구조**를 적용. BM25의 정밀 매칭과 DPR의 의미 기반 검색 장점을 모두 유지하며 **Dense 기반이면서도 세밀한 단어 단위 매칭이 가능한 구조**를 제시 |
     | **On Complementarity Objectives for Hybrid Retrieval** — Lee et al., 2023 (ACL) |	https://aclanthology.org/2023.acl-long.746.pdf	| DPR+BM25 같은 단순 선형 결합 하이브리드의 한계를 지적하고, Sparse(BM25)와 Dense(DPR 계열)가 서로 다른 문서를 가져오도록 두 수준의 직교성 제약(임베딩/입력 레벨)을 주는 학습 목표를 제안. Natural Questions, Robust04 등에서 coCondenser+BM25 단순 합보다 더 강한 하이브리드 성능과 높은 상보성을 달성함을 보임 |
     | **Hybrid Hierarchical Retrieval for Open-Domain Question Answering (HHR)** — Arivazhagan et al., 2023 (Findings of ACL)	| https://aclanthology.org/2023.findings-acl.679.pdf	| ODQA 파이프라인의 문서/패시지 두 단계 모두에서 Sparse와 Dense retrieval를 조합하는 계층형 하이브리드 프레임워크를 제안. 각 단계에서 BM25와 dense retriever의 상위 k/2 결과를 interleave하는 전략만으로도, Dense-only보다 in-domain 성능을 유지하면서 OOD 일반화와 길이 긴 문서 처리에서 향상된 성능을 달성함을 보임 |
-
 
 
 ## Conclusion
