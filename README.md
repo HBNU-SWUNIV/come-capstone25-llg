@@ -40,8 +40,11 @@ PDF 파싱 기반 RAG 파이프라인 개발
 <img width="483" height="168" alt="Image" src="https://github.com/user-attachments/assets/ed89adb6-f2cb-4f77-8aec-f79519d47247" />
 <img width="482" height="155" alt="Image" src="https://github.com/user-attachments/assets/796fb72d-f145-4ca6-80f9-4fffcbd9016c" />
 
-
-
+  - 최종 화면
+    - pdf 문서 관리 앱
+    <img width="1190" height="797" alt="Image" src="https://github.com/user-attachments/assets/6ce7bb45-7f99-45ce-b7bc-2ff3cf11436b" />
+    - 챗봇 UI
+      
 ## Case Study
    - ### Description
 
