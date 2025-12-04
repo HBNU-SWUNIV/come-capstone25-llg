@@ -3,7 +3,6 @@ from tqdm import tqdm
 import string, json
 
 def preprocess_text(text):
-    """텍스트 전처리: 소문자화 및 구두점 제거"""
     text = text.lower()
     text = text.translate(str.maketrans('', '', string.punctuation))
     return text.split()
@@ -14,7 +13,6 @@ def add_hard_negatives_with_bm25(dpr_data, all_corpus, top_n=5):
     bm25 = BM25Okapi(tokenized_corpus)
 
     for sample in tqdm(dpr_data, desc="Adding hard negatives"):
-        # 이미 hard_neg 필드가 존재하면 건너뜀
         if 'hard_neg' in sample and sample['hard_neg']:
             continue
 

@@ -4,10 +4,8 @@ import uvicorn
 import time
 from typing import Optional, List
 
-# --- DB 관련 import
 from sqlalchemy.orm import Session, joinedload # joinedload 추가
 from fastapi import FastAPI, HTTPException, Depends
-# ChatImage 추가 import
 from database import SessionLocal, init_db, ChatSession, ChatMessage, ChatImage 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -27,7 +25,6 @@ load_dotenv(dotenv_path=BASE_DIR / ".env")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# DB 초기화
 try:
     init_db()
 except Exception as e:
@@ -74,7 +71,6 @@ def get_db():
     finally:
         db.close()
 
-# --- Pydantic 모델 ---
 class Message(BaseModel):
     role: str
     content: str
@@ -123,10 +119,8 @@ async def get_sessions(db: Session = Depends(get_db)):
         })
     return result
 
-# --- [수정됨] 메시지 불러오기 (이미지 포함) ---
 @app.get("/sessions/{session_id}/messages")
 async def get_session_messages(session_id: str, db: Session = Depends(get_db)):
-    # joinedload를 사용하여 이미지 테이블까지 한 번에 로드 (성능 최적화)
     msgs = (
         db.query(ChatMessage)
         .options(joinedload(ChatMessage.images)) 
@@ -135,10 +129,8 @@ async def get_session_messages(session_id: str, db: Session = Depends(get_db)):
         .all()
     )
     
-    # DB 객체를 Pydantic/Dict 구조로 변환
     result = []
     for m in msgs:
-        # 이미지 리스트 변환
         images_data = []
         for img in m.images:
             images_data.append({
@@ -152,7 +144,7 @@ async def get_session_messages(session_id: str, db: Session = Depends(get_db)):
             "role": m.role,
             "content": m.content,
             "consultantMode": False,
-            "images": images_data # 이미지 포함
+            "images": images_data 
         })
         
     return result
@@ -165,7 +157,6 @@ async def delete_session(session_id: str, db: Session = Depends(get_db)):
         db.commit()
     return {"status": "ok"}
 
-# --- [수정됨] 채팅 API (이미지 저장 로직 추가) ---
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest, db: Session = Depends(get_db)):
     logger.info(f"API 호출: {request}")
@@ -179,7 +170,6 @@ async def chat(request: ChatRequest, db: Session = Depends(get_db)):
         query = last_message.content
         is_consultant_mode = request.is_consultant_mode or last_message.is_consultant_mode
 
-        # 1. 세션 처리
         session_id = request.session_id
         if not session_id:
             new_session = ChatSession(
@@ -191,39 +181,33 @@ async def chat(request: ChatRequest, db: Session = Depends(get_db)):
             db.refresh(new_session)
             session_id = new_session.id
 
-        # 2. 유저 질문 저장
         db_user_msg = ChatMessage(session_id=session_id, role="user", content=query)
         db.add(db_user_msg)
         db.commit()
 
-        # 3. LLM 생성
         start_time = time.time()
         answer, images = app.llm_cache.generate(query, is_consultant_mode)
         elapsed_time = time.time() - start_time
         logger.info(f"소요 시간: {elapsed_time:.2f}s")
 
-        # 4. AI 답변 저장
         db_ai_msg = ChatMessage(session_id=session_id, role="assistant", content=answer)
         db.add(db_ai_msg)
         db.commit()
         db.refresh(db_ai_msg) 
 
-        # 5. [추가됨] 이미지 저장 로직
         if images:
             for img in images:
-                # Pydantic 모델(ImageItem)이거나 딕셔너리일 수 있으므로 처리
                 img_base64 = img.base64 if hasattr(img, 'base64') else img.get('base64')
                 img_index = img.index if hasattr(img, 'index') else img.get('index', 0)
                 
                 db_image = ChatImage(
-                    message_id=db_ai_msg.id, # AI 메시지와 연결
+                    message_id=db_ai_msg.id, 
                     base64=img_base64,
                     index=img_index
                 )
                 db.add(db_image)
-            db.commit() # 이미지 저장 확정
+            db.commit() 
 
-        # 6. 응답 생성
         response = ChatResponse(
             role="assistant",
             content=answer,
@@ -235,7 +219,7 @@ async def chat(request: ChatRequest, db: Session = Depends(get_db)):
 
     except Exception as e:
         logger.error(f"오류 발생: {e}")
-        db.rollback() # 에러 발생 시 롤백
+        db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":

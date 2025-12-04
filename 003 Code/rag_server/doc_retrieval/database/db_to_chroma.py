@@ -213,14 +213,12 @@ def main():
         resolved_model_id = str(model_path)
         print(f"[MODEL] Using local DPR context encoder at: {resolved_model_id}")
     else:
-        # 로컬 디렉토리가 없으면 klue/bert-base로 fallback
         resolved_model_id = "snumin44/biencoder-ko-bert-context"
         print(
             f"[MODEL][WARN] Local model dir not found: {requested_model_dir}\n"
             f"          Falling back to HuggingFace model: {resolved_model_id}"
         )
 
-    # Load config
     cfg = load_config(args.config)
 
     print("=== 설정 ===")
@@ -316,7 +314,6 @@ def main():
 
             ids_batch, titles_batch, texts_batch = [], [], []
 
-    # 남은 배치 처리
     if ids_batch:
         embeddings = encode_batch(
             titles_batch,

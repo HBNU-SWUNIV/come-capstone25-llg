@@ -30,7 +30,7 @@ def rerank(
         ).to(device)
 
         outputs = model(**encoded)
-        logits = outputs.logits.squeeze(-1)  # (N,)
+        logits = outputs.logits.squeeze(-1) 
         scores = logits.detach().cpu().numpy()
 
     sorted_idx = scores.argsort()[::-1][:top_k]

@@ -20,7 +20,6 @@ RUN pip install --upgrade pip setuptools wheel \
 
 COPY . .
 
-# entrypoint 실행 권한 부여
 RUN chmod +x /app/entrypoint.sh
 
 RUN find . -name "*.pyc" -delete && find . -name "__pycache__" -type d -exec rm -r {} +

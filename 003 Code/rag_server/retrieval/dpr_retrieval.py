@@ -28,7 +28,6 @@ def dpr_search_ids(
     if pooler is not None and hasattr(pooler, "to"):
         pooler.to(device)
 
-    # 쿼리 임베딩 생성
     q_batch = tokenizer(
         [query],
         padding=True,
@@ -45,7 +44,6 @@ def dpr_search_ids(
             token_type_ids=q_batch.get("token_type_ids", None),
         )
 
-    # pooler가 있으면 pooler 사용, 없으면 CLS 토큰 사용
     if pooler is not None:
         embedding = pooler(q_batch["attention_mask"], outputs).cpu().numpy()
     else:
@@ -97,7 +95,6 @@ def hybrid_search_ids(
     final_top_k: int = 10,
     alpha: float = 0.3,
 ) -> List[str]:
-    # DPR 검색
     dpr_results = dpr_search_ids(
         query,
         q_encoder,
@@ -110,29 +107,21 @@ def hybrid_search_ids(
     )
     logger.info(f"[DPR] Retrieved {len(dpr_results)} document IDs")
 
-    # BM25 검색
     bm25_results: List[Tuple[str, float]] = []
     if bm25_retriever is not None and bm25_top_k > 0:
         bm25_results = bm25_retriever.search_with_scores(query, top_k=bm25_top_k)
         logger.info(f"[BM25] Retrieved {len(bm25_results)} document IDs")
 
-    # RRF (Reciprocal Rank Fusion) 적용
-    # 점수가 아닌 순위(Rank)를 기반으로 결합하여 스케일 문제를 해결함
     rrf_scores: Dict[str, float] = {}
     rrf_k = 60
 
-    # 1. DPR 순위 반영
     if dpr_results:
-        # 이미 점수순 정렬되어 있으므로 인덱스가 곧 순위(0-based)
         for rank, (doc_id, _) in enumerate(dpr_results):
             if doc_id not in rrf_scores:
                 rrf_scores[doc_id] = 0.0
 
-            # 가중치를 적용한 RRF 점수 (rank는 0부터 시작하므로 +1 안해도 되지만 k가 충분히 크므로 상관없음)
-            # 여기서는 rank+1을 사용하여 1등부터 계산
             rrf_scores[doc_id] += alpha * (1 / (rrf_k + rank + 1))
 
-    # 2. BM25 순위 반영
     if bm25_results:
         for rank, (doc_id, _) in enumerate(bm25_results):
             if doc_id not in rrf_scores:
@@ -140,10 +129,8 @@ def hybrid_search_ids(
 
             rrf_scores[doc_id] += (1 - alpha) * (1 / (rrf_k + rank + 1))
 
-    # 3. 최종 정렬
     final_scores = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
 
-    # Top-K 문서 ID 반환
     top_doc_ids = [doc_id for doc_id, _ in final_scores[:final_top_k]]
 
     logger.info(f"[HYBRID] Final {len(top_doc_ids)} document IDs selected (RRF Method)")
@@ -153,7 +140,6 @@ def hybrid_search_ids(
     return top_doc_ids
 
 
-# 기존 인터페이스 호환 함수 (deprecated)
 def search_documents(
     query: str,
     q_encoder: PreTrainedModel,
