@@ -112,14 +112,12 @@
       <br><b>pdf 문서 관리 앱</b>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/c738cd17-a686-49cc-a78c-7131d853dbca" width="450"/>
+      <img src="https://github.com/user-attachments/assets/e3218245-f9fe-4c63-8336-4e9f7e323739" width="600"/>
       <br><b>챗봇 UI</b>
     </td>
   </tr>
 </table>
 
-
-    
 ## Case Study
   - ### Description
   
