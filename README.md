@@ -81,6 +81,18 @@
 
       -  확장 가능 구조로 도메인 변경 시에도 동일 파이프라인 사용 가능
 
+ - 기존 AI를 활용해서 질문을 하였을 때는 응답을 잘 생성하지 못하였지만, 본 RAG을 사용하였을 때는 문서 기반으로 정확하게 답변한 것을 확인할 수 있음
+<img width="393" height="169" alt="Image" src="https://github.com/user-attachments/assets/0ae11774-d1d6-4e66-ad49-0e6e540ac14d" />
+<img width="483" height="168" alt="Image" src="https://github.com/user-attachments/assets/ed89adb6-f2cb-4f77-8aec-f79519d47247" />
+<img width="482" height="155" alt="Image" src="https://github.com/user-attachments/assets/796fb72d-f145-4ca6-80f9-4fffcbd9016c" />
+
+
+
+  - 최종 화면
+    - pdf 문서 관리 앱
+    <img width="1190" height="797" alt="Image" src="https://github.com/user-attachments/assets/6ce7bb45-7f99-45ce-b7bc-2ff3cf11436b" />
+    - 챗봇 UI
+      
 ## Case Study
   - ### Description
   
