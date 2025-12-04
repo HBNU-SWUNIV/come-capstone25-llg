@@ -1,0 +1,283 @@
+# API 키 및 환경 변수
+backend/api_key.json
+backend/.env
+rag_server/api_key.json
+rag_server/apikey.env
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+kubectl
+minikube-linux-amd64
+
+# 인덱싱 
+rag_server/chroma_db/
+rag_server/pyserini_index/
+
+# Python 캐시 및 컴파일된 파일
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib64/
+.chroma_initialized
+.pyserini_initialized
+
+# 가상환경
+venv/
+env/
+ENV/
+.venv/
+.env/
+.ENV/
+
+# Python 패키지 관리
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+node_modules/
+frontend/node_modules/
+.pnp
+frontend/.pnp
+.pnp.js
+frontend/.pnp.js
+
+# 빌드 출력
+.next/
+frontend/.next/
+out/
+frontend/out/
+build/
+frontend/build/
+dist/
+frontend/dist/
+
+# 배포
+.vercel
+frontend/.vercel
+.netlify
+frontend/.netlify
+./model
+
+# 테스트 및 커버리지
+coverage/
+frontend/coverage/
+.nyc_output
+frontend/.nyc_output
+
+# 로그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+frontend/next-env.d.ts
+
+# SQLite
+*.sqlite3
+*.db
+*.sqlite
+
+# PostgreSQL
+*.sql
+*.dump
+
+# 벡터 데이터베이스
+backend/chroma/
+chroma/
+vector_db/
+embeddings/
+
+# 인덱스 데이터
+backend/index_data/
+index_data/
+documents/
+uploads/
+
+# 데이터 파일
+/data/
+/datasets/
+/models/
+*.jsonl
+*.json
+*.txt
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.pb
+
+# Docker 및 컨테이너
+.dockerignore
+docker-compose.override.yml
+docker-compose.*.yml
+!docker-compose.yml
+
+# 개발 도구 및 IDE
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# 운영체제
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# 시스템 파일
+# 설정 파일
+.gitconfig
+.bashrc
+.bash_history
+.zshrc
+.zsh_history
+.lesshst
+.windsurf
+.windsurf-server
+
+# 캐시 및 임시 파일
+.cache/
+.codeium/
+.local/
+.npm/
+.nvm/
+.ssh/
+.tmp/
+temp/
+tmp/
+
+# 로그 파일
+logs/
+*.log
+
+# ===========================================
+# 기타
+# ===========================================
+# 임시 파일
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+
+# 압축 파일
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# 바이너리 파일
+*.exe
+*.dll
+*.so
+*.dylib
+*.app
+
+# 문서 파일 (선택적)
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx

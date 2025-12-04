@@ -1,0 +1,88 @@
+services:
+  ki-chat:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ki-api
+    env_file:
+      - .env
+
+  ki-api:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+      - ./backend/api_key.json:/app/api_key.json:ro
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://kilab:kilab1234@db:5432/kilab
+      - CHROMA_URL=http://chromadb:8000
+      - RAG_URL=http://rag:8001
+    depends_on:
+      - chromadb
+      - rag
+      - db
+    env_file:
+      - .env
+
+  rag:
+    build: ./rag_server
+    ports:
+      - "8001:8001"
+    depends_on:
+      - chromadb
+      - db
+    volumes:
+      - ./rag_server:/app
+      - ./rag_server/pyserini_index:/app/pyserini_index
+      - ./model/Qwen2.5-7B-Instruct:/app/model/qwen2.5-7b-instruct
+    environment:
+      # RAG 서버용 환경변수
+      - DATABASE_HOST=host.docker.internal 
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=kilab
+      - DATABASE_USER=kilab
+      - DATABASE_PASSWORD=kilab1234
+      - CHROMA_URL=http://chromadb:8000
+      - NVIDIA_VISIBLE_DEVICES=0
+    extra_hosts:                             
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    env_file:
+      - .env  
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: chromadb
+    expose:
+      - "8000"
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./rag_server/chroma_db:/chroma/.chromadb
+    environment:
+      - CHROMA_DB_IMPL=duckdb+parquet
+    restart: always
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=kilab
+      - POSTGRES_PASSWORD=kilab1234
+      - POSTGRES_DB=kilab
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    restart: always
+
+volumes:
+  db-data:

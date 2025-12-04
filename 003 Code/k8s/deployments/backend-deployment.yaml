@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ki-api
+  namespace: chatbot-app
+  labels:
+    app: ki-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ki-api
+  template:
+    metadata:
+      labels:
+        app: ki-api
+    spec:
+      containers:
+      - name: ki-api
+        image: chatbot-backend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: RAG_SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: RAG_SERVER_URL
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10

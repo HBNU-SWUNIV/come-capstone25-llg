@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chromadb
+  namespace: chatbot-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chromadb
+  template:
+    metadata:
+      labels:
+        app: chromadb
+    spec:
+      containers:
+      - name: chromadb
+        image: chromadb/chroma:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: CHROMA_DB_IMPL
+          value: "duckdb+parquet"
+        volumeMounts:
+        - name: chroma-data
+          mountPath: /chroma/.chromadb
+      volumes:
+      - name: chroma-data
+        hostPath:
+          path: /data/chroma
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chromadb
+  namespace: chatbot-app
+spec:
+  selector:
+    app: chromadb
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: ClusterIP
