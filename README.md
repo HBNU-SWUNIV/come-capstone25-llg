@@ -28,7 +28,11 @@
     | 실행 권장 환경 | 16GB RAM 이상                             |
     | GPU (선택) | NVIDIA GPU + CUDA 11 이상 --> DPR 인코딩 성능 향상 |
 
-- DPR 모델이 존재하지 않는 경우, 모델 디렉토리에 학습된 DPR 모델이 없을 시 자동으로 klue/roberta-base 모델로 fallback 하여 Dense Retrieval 수행
+- DPR 모델이 존재하지 않는 경우, 모델 디렉토리에 학습된 DPR 모델이 없을 시 자동으로 
+
+  snumin44/biencoder-ko-bert-context, snumin44/biencoder-ko-bert-question 모델로 fallback 하여 Dense Retrieval 수행
+
+
   
 <table>
   <tr>
