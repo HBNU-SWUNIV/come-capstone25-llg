@@ -87,13 +87,20 @@
 <img width="482" height="155" alt="Image" src="https://github.com/user-attachments/assets/796fb72d-f145-4ca6-80f9-4fffcbd9016c" />
 
 
-
   - 최종 화면
-    - pdf 문서 관리 앱
-    <img width="1190" height="797" alt="Image" src="https://github.com/user-attachments/assets/6ce7bb45-7f99-45ce-b7bc-2ff3cf11436b" />
-    
-    - 챗봇 UI
-    <img width="1449" height="1322" alt="Image" src="https://github.com/user-attachments/assets/1edebf49-5c01-4371-9508-d9435303e25e" />
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/6ce7bb45-7f99-45ce-b7bc-2ff3cf11436b" width="600"/>
+      <br><b>pdf 문서 관리 앱</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/1edebf49-5c01-4371-9508-d9435303e25e" width="450"/>
+      <br><b>챗봇 UI</b>
+    </td>
+  </tr>
+</table>
+
     
 ## Case Study
   - ### Description
